@@ -24,7 +24,5 @@ return  await User.all()
 Route.post("/auth/login", "AuthController.login");
 Route.group(() => {
 
-  Route.get("/not", () => {
-    return { greeting: "Hello world in JSON" };
-  });
+
 }).prefix("api/v1").middleware("auth");
