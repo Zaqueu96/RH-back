@@ -15,14 +15,16 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use("Route");
-const User = use('App/Models/User')
-
-Route.get("/",async () => {
-return  await User.all()
+const User = use("App/Models/User");
+const Skill = use("App/Models/Skill");
+Route.get("/", async () => {
+  return await Skill.all();
 });
 
 Route.post("/auth/login", "AuthController.login");
 Route.group(() => {
-
-}).prefix("api/v1").middleware("auth");
-
+  /** Skills Route */
+  Route.get("/skills", "SkillController.index");
+})
+  .prefix("api/v1")
+  .middleware("auth");
