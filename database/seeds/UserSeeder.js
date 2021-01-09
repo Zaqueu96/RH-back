@@ -13,21 +13,25 @@
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use("Factory");
 const User = use("App/Models/User");
-const Database = use('Database')
+const Database = use("Database");
 class UserSeeder {
   async run() {
-    let user = new User();
-    user.username = "Joao MAIL";
-    user.email = "joao@mail.com";
-    user.password = "joao@123";
-    await user.save();
+    const joaoData = {
+      username: "Joao MAIL",
+      email: "joao@mail.com",
+      password: "joao@123",
+    };
+    const mariaData = {
+      username: "Maria MAIL",
+      email: "maria@mail.com",
+      password: "maria@123",
+    };
 
-    let user2 = new User();
-    user2.username = "Maria MAIL";
-    user2.email = "maria@mail.com";
-    user2.password = "maria@123";
-    await user2.save();
-
+    await Promise.all(
+      [mariaData, joaoData].map((data) => {
+        return User.findOrCreate({email:data.email}, data);
+      })
+    );
   }
 }
 

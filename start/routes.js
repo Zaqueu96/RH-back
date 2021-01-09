@@ -24,5 +24,5 @@ return  await User.all()
 Route.post("/auth/login", "AuthController.login");
 Route.group(() => {
 
-
 }).prefix("api/v1").middleware("auth");
+
