@@ -29,7 +29,9 @@
     "mysql": "^2.18.1",
     "sqlite3": "^5.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chancejs": "^0.0.8"
+  },
   "autoload": {
     "App": "./app"
   }
