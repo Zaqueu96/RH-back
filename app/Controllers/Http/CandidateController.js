@@ -68,10 +68,8 @@ class CandidateController {
   async update({ request, response }) {
     try {
       const { id } = request.params;
-      console.log("id: ",typeof id)
       const { nome, email, linkedin, idade, skills } = request.body;
       const ids = skills.map((v) => v.id);
-      console.log("ids: ",ids)
       const candidate = await Candidate.find(id);
       candidate.merge({ nome, email, linkedin, idade });
       await candidate.save();
@@ -79,7 +77,6 @@ class CandidateController {
       await candidate.skills().attach(ids);
       return this.show({ request, response });
     } catch (e) {
-      console.log("error: ", e);
       return response.status(500).send({ error: e });
     }
   }
@@ -103,10 +100,10 @@ class CandidateController {
    * Delete Candidate
    * @param {*} param0
    */
-  async delete({ request, response }) {
+  async destroy({ request, response }) {
     try {
       const { id } = request.params;
-      const candidate = await Candidate.find(id);
+      const candidate = await Candidate.findOrFail(id);
       await candidate.delete();
       return response.status(200).send({ message: "Candidate Deleted" });
     } catch (e) {
