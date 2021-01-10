@@ -25,7 +25,10 @@ Route.post("/auth/login", "AuthController.login");
 Route.group(() => {
   /** Skills Route */
   Route.get("/skills", "SkillController.index");
-  Route.resource("/candidates", "CandidateController");
+Route.resource("candidates", "CandidateController").validator(new Map([
+    [['candidates.store'], ['CandidateValidator']],
+    [['candidates.update'], ['CandidateValidator']]
+  ]))
 })
   .prefix("api/v1")
   .middleware("auth");
