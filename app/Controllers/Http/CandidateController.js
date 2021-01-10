@@ -20,12 +20,14 @@ class CandidateController {
    */
   async store({ request, response }) {
     try {
-      const { nome, email, linkedin, idade, skills } = request.body();
+      const { nome, email, linkedin, idade, skills } = request.body;
+
       const candidate = new Candidate();
       candidate.merge({ nome, email, linkedin, idade });
       await candidate.save();
       return response.status(200).send(candidate);
     } catch (e) {
+      console.log("error: ", e);
       return response.status(500).send({ error: e });
     }
   }

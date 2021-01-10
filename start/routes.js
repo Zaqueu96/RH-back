@@ -25,6 +25,7 @@ Route.post("/auth/login", "AuthController.login");
 Route.group(() => {
   /** Skills Route */
   Route.get("/skills", "SkillController.index");
+  Route.resource("/candidates", "CandidateController");
 })
   .prefix("api/v1")
   .middleware("auth");
