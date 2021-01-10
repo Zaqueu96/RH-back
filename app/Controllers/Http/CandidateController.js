@@ -1,15 +1,43 @@
 "use strict";
-
+/** @typedef {import('@adonisjs/framework/src/Request')} Request */
+/** @typedef {import('@adonisjs/framework/src/Response')} Response */
+/** @typedef {import('@adonisjs/framework/src/View')} View */
+/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
+/** @type {typeof import('../../Models/Candidate')} */
 const Candidate = use("App/Models/Candidate");
+/** @type {typeof import('../../Models/CandidateSkill')} */
+const CandidateSkill = use("App/Models/CandidateSkill");
 class CandidateController {
   /**
    * List and Filter Candidates
    */
   async index({ request, response }) {
     try {
-      const candidates = await Candidate.query().with("skills").fetch();
+      let candidateIds = null;
+      const { nameOrEmail, skills: skillsData } = request.all();
+
+      console.log("all: ", request.all());
+      if (skillsData) {
+        const skls = skillsData.split(",").filter((n) => Number.isInteger(+n));
+        candidateIds = await CandidateSkill.query()
+          .whereIn("skill_id", skls)
+          .ids();
+      }
+      const queryModel = Candidate.query();
+
+      if (nameOrEmail) {
+        queryModel.where("nome", "like", `%${nameOrEmail}%`);
+        queryModel.orWhere("email", "like", `%${nameOrEmail}%`);
+      }
+      if (candidateIds && candidateIds.length > 0) {
+        queryModel.whereIn("id", candidateIds);
+      }
+
+      queryModel.with("skills");
+      const candidates = await queryModel.fetch();
       return response.status(200).send(candidates);
     } catch (e) {
+      console.log("Erro: ", e);
       return response.status(500).send({ error: e });
     }
   }
