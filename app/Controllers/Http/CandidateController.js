@@ -19,18 +19,20 @@ class CandidateController {
       console.log("all: ", request.all());
       if (skillsData) {
         const skls = skillsData.split(",").filter((n) => Number.isInteger(+n));
-        candidateIds = await CandidateSkill.query()
+        const { rows } = await CandidateSkill.query()
           .whereIn("skill_id", skls)
-          .ids();
+          .fetch();
+        candidateIds = rows.map((v) => v.candidate_id);
       }
+
       const queryModel = Candidate.query();
 
+      if (candidateIds && candidateIds.length > 0) {
+        queryModel.whereIn("id", candidateIds);
+      }
       if (nameOrEmail) {
         queryModel.where("nome", "like", `%${nameOrEmail}%`);
         queryModel.orWhere("email", "like", `%${nameOrEmail}%`);
-      }
-      if (candidateIds && candidateIds.length > 0) {
-        queryModel.whereIn("id", candidateIds);
       }
 
       queryModel.with("skills");

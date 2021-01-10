@@ -4,6 +4,14 @@
 const Model = use('Model')
 
 class Skill extends Model {
+
+  static get computed () {
+    return ['isSelected']
+  }
+
+  getIsSelected () {
+    return false;
+  }
 }
 
 module.exports = Skill
