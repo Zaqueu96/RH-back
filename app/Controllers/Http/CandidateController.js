@@ -7,7 +7,7 @@ class CandidateController {
    */
   async index({ request, response }) {
     try {
-      const candidates = await Candidate.all();
+      const candidates = await Candidate.query().with("skills").fetch();
       return response.status(200).send(candidates);
     } catch (e) {
       return response.status(500).send({ error: e });
@@ -21,10 +21,12 @@ class CandidateController {
   async store({ request, response }) {
     try {
       const { nome, email, linkedin, idade, skills } = request.body;
-
+      const ids = skills.map((v) => v.id);
+      console.log("ids", ids);
       const candidate = new Candidate();
       candidate.merge({ nome, email, linkedin, idade });
       await candidate.save();
+      await candidate.skills().attach(ids);
       return response.status(200).send(candidate);
     } catch (e) {
       console.log("error: ", e);
