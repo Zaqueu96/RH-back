@@ -13,14 +13,14 @@ class CandidateSkillSchema extends Schema {
         .references("id")
         .inTable("candidates")
         .onUpdate("CASCADE")
-        .onDelete("SET NULL");
+        .onDelete("CASCADE");
       table
         .integer("skill_id")
         .unsigned()
         .references("id")
         .inTable("skills")
         .onUpdate("CASCADE")
-        .onDelete("SET NULL");
+        .onDelete("CASCADE");
       table.timestamps();
     });
   }

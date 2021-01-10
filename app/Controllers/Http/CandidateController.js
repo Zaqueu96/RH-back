@@ -50,14 +50,13 @@ class CandidateController {
     try {
       const { nome, email, linkedin, idade, skills } = request.body;
       const ids = skills.map((v) => v.id);
-      console.log("ids", ids);
       const candidate = new Candidate();
       candidate.merge({ nome, email, linkedin, idade });
       await candidate.save();
       await candidate.skills().attach(ids);
+      await candidate.load("skills");
       return response.status(200).send(candidate);
     } catch (e) {
-      console.log("error: ", e);
       return response.status(500).send({ error: e });
     }
   }
@@ -69,12 +68,18 @@ class CandidateController {
   async update({ request, response }) {
     try {
       const { id } = request.params;
-      const { nome, email, linkedin, idade, skills } = request.body();
-      const candidate = await Candidate.find(parseInt(id));
+      console.log("id: ",typeof id)
+      const { nome, email, linkedin, idade, skills } = request.body;
+      const ids = skills.map((v) => v.id);
+      console.log("ids: ",ids)
+      const candidate = await Candidate.find(id);
       candidate.merge({ nome, email, linkedin, idade });
       await candidate.save();
+      await candidate.skills().detach();
+      await candidate.skills().attach(ids);
       return this.show({ request, response });
     } catch (e) {
+      console.log("error: ", e);
       return response.status(500).send({ error: e });
     }
   }
@@ -87,6 +92,7 @@ class CandidateController {
     try {
       const { id } = request.params;
       const candidate = await Candidate.find(id);
+      await candidate.load("skills");
       return response.status(200).send(candidate);
     } catch (e) {
       return response.status(500).send({ error: e });
