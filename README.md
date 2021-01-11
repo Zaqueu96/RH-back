@@ -1,6 +1,5 @@
-# Adonis API application
-
-This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
+# RH  - Back-end
+Projeto de gerenciamento de RH parap o front (https://github.com/Zaqueu96/RH-Front-App).
 
 1. Bodyparser
 2. Authentication JWT
