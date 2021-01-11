@@ -10,9 +10,9 @@ This is the boilerplate for creating an API server in AdonisJs, it comes pre-con
 
 
 ## Configurar
- É necessário criar um banco de dados e adicioná-lo no .env e após executar o comando abaixo
+ É necessário configurar as variaveis de ambiente com base no .env.example
 ```bash
-adonis mihration:run
+adonis migration:run
 ```
 ## Instalar Dependencias
 ```bash
@@ -27,4 +27,12 @@ Run the following command to run startup migrations.
 
 ```js
 adonis migration:run
+```
+
+
+### Criar Usuários Administrativos( email:maria@mail.com, senha:maria@123 | email:joao@mail.com, senha:joao@123)
+
+É necessário rodar o comando abaixo para criação dos usuário administrativos.
+```js
+adonis seed
 ```
