@@ -32,7 +32,7 @@ Factory.blueprint("App/Models/Skill", (faker) => {
 Factory.blueprint("App/Models/Candidate", (faker) => {
   return {
     nome: faker.sentence({ word: 4 }),
-    emails: faker.email(),
+    email: faker.email(),
     idade: faker.integer({ min: 10, max: 99 }),
     linkedin: faker.url(),
   };
