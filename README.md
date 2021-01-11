@@ -35,3 +35,10 @@ adonis migration:run
 ```js
 adonis seed
 ```
+
+### Iniciar Servidor
+
+É necessário rodar o comando abaixo para iniciar o servidor normal, para o modo desenvolvimento soment adicionar ```--dev```.
+```js
+adonis serve
+```
