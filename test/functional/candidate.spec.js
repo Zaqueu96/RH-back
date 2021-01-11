@@ -10,7 +10,6 @@ trait("Test/ApiClient");
 
 beforeEach(async () => {
   await User.query().where("id", ">", 0).delete();
-  // await Candidate.query().where("id", ">", 0).delete();
 });
 
 test("Create Candidate", async ({ assert, client }) => {
