@@ -1,5 +1,5 @@
 # RH  - Back-end
-Projeto de gerenciamento de RH parap o front (https://github.com/Zaqueu96/RH-Front-App).
+Projeto de gerenciamento de RH para o front (https://github.com/Zaqueu96/RH-Front-App).
 
 1. Bodyparser
 2. Authentication JWT
